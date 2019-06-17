@@ -8,7 +8,7 @@
     "watch": "webpack --progress --config webpack.config.dev.js",
     "build": "webpack --progress --config webpack.config.prod.js",
     "test": "mocha-webpack --webpack-config webpack.config.test.js \"src/**/*.test.js\" --watch",
-    "clean": "rm -rf build; rm -rf .hmr; rm -rf logs"
+    "clean": "rm -rf build; rm -rf logs"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +42,7 @@
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "cookie": "^0.4.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "googleapis": "^40.0.0",
@@ -52,6 +53,8 @@
     "mongoose": "^5.5.12",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
+    "nodemon-webpack-plugin": "^4.0.8",
+    "socket.io": "^2.2.0",
     "validator": "^10.11.0",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.9.0"

@@ -22,7 +22,6 @@ for(let [name, config] of Object.entries(Modules)) {
 app.use(express.static('./public'));
 
 app.get('*', (req, res) => {
-
     res.sendFile(path.resolve('./public/index.html'));
 });
 
