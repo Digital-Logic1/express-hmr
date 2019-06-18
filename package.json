@@ -51,6 +51,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.6",
     "mongoose": "^5.5.12",
+    "monitor.io": "^0.1.0",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
     "nodemon-webpack-plugin": "^4.0.8",

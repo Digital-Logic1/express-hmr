@@ -12,6 +12,10 @@ import { createCallbackURL, getFacebookAccount } from './facebook-auth';
 async function getAuth(req, res, next) {
     return res.status(200).json({
         id: req.user && req.user.id,
+        tokens: {
+            access: req.cookies.accessToken,
+            refresh: req.cookies.refreshToken
+        },
         rules: req.ability && req.ability.rules || defineAbilitiesFor(req.user)
     });
 }
@@ -34,15 +38,18 @@ async function processOAuth(req, res, next) {
         if (/google/i.test(path)) {
             // google api call
             userAccount = await getGoogleAccount(code);
+            Logger.info(`Google account login: ${userAccount}`);
 
         } else if (/facebook/i.test(path)) {
             // facebook api call
             userAccount = await getFacebookAccount(code);
+            Logger.info(`Facebook account login: ${userAccount}`);
         }
         // Add other OAuth providers
 
         // does the account exist?
         let user = await model.findOne({ email: userAccount.email });
+        Logger.info(`User account ${user} logging in through oAuth`);
 
         if (user) {
             // The user account has not been verified
@@ -114,7 +121,11 @@ async function sendTokens(req, res, next) {
 
         res.status(200).json({
             id: user.id,
-            rules: defineAbilitiesFor(user).rules
+            rules: defineAbilitiesFor(user).rules,
+            tokens: {
+                access: access.token,
+                refresh: refresh.token
+            }
         });
 
     } catch (e) {
@@ -133,7 +144,7 @@ async function signIn(req, res, next) {
             req.user = user;
             req.ability = defineAbilitiesFor(user);
 
-            sendTokens(req, res, next);
+            await sendTokens(req, res, next);
         } else {
             next(new Forbidden("User account must be verified before login."));
         }
