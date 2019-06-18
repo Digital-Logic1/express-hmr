@@ -1,8 +1,7 @@
 import socketIO from 'socket.io';
 import cookie from 'cookie';
 import Logger from './Logger';
-import { accessToken, refreshToken } from './modules/auth/token';
-
+import { refreshToken } from './modules/auth/token';
 
 
 function create(server, options) {
@@ -27,7 +26,7 @@ function create(server, options) {
                     socket.join(socket.user.id);
                     socket.emit('SYNC_AUTH_SUBSCRIBE_SUCCESS');
                 }
-            } catch(e) { console.log(e); }
+            } catch(e) { Logger.error(`Socket.IO init error: ${e.message}`); }
         }
 
         socket.on('disconnect', () => {
@@ -49,7 +48,7 @@ function create(server, options) {
                    // console.log('SYNC_AUTH_SUBSCRIBE: Leaving Room: ', socket.user.id);
                 }
 
-                // validate the users identity
+                // verify the users id
                 if (token) {
                     try {
                         const rToken = await refreshToken.verify(token);
@@ -68,9 +67,12 @@ function create(server, options) {
         // The user on this socket is logging out,
         // notify all other listeners.
         socket.on('SYNC_AUTH_LOGOUT', () => {
-            console.log('Logging out: ', socket.user.id, Object.keys(socket.rooms));
-            console.log(socket.user.id);
             socket.to(socket.user.id).emit('SYNC_AUTH_LOGOUT', socket.user.id);
+        });
+
+        // Update user info
+        socket.on('SYNC_USER_INFO', user => {
+            socket.to(socket.user.id).emit('SYNC_USER_INFO', user);
         });
     });
 }
