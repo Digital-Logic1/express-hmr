@@ -3,7 +3,6 @@ import cookie from 'cookie';
 import Logger from './Logger';
 import { refreshToken } from './modules/auth/token';
 
-
 function create(server, options) {
     const io = socketIO(server,options);
 

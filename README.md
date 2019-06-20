@@ -3,10 +3,12 @@
 ## What it provides
 * User authorization, authentication, and access control.
 * Social media login support and account integration
+* Socket.IO is used to synchronizes application state between multiply sessions.
 * JWT token are stored in cookies.
 * Bcrypt encryption on user passwords
 * Email validate, password reset using jwt tokens.
-* Express with HMR support through webpack.
+* ~~Express with HMR support through webpack.~~
+* Server automatically restarts when changes are detected using nodemon through webpack
 * MongoDB, Mongoose.
 * Testing with Mocha, Chai in watch mode.
 * Logging with winston and morgan.
@@ -19,7 +21,7 @@
 
 ### Available commands
 ```javascript
-npm run start // Start the development server with HMR
+npm run start // Start the development server with nodemon (no longer with hmr)
 npm run build // Create a production build, (/build)
 npm run test  // Run tests through Mocha / Chai (with watch mode enabled)
 npm run clean // Remove build files
