@@ -36,7 +36,6 @@ function create(server, options) {
          *
          */
         socket.on('SYNC_AUTH_SUBSCRIBE', async ({ id, token }) => {
-            console.log(`SYNC_AUTH_SUBSCRIBE: RAN: ${id} ${socket.id}`);
 
             if (!socket.user.id || socket.user.id !== id) {
                 // console.log(`SYNC_AUTH_SUBSCRIBE - id: ${id}, token: ${ Boolean(token)}`);
@@ -54,7 +53,7 @@ function create(server, options) {
                         if (id === rToken.id) {
                             socket.user.id = id;
                             socket.join(socket.user.id);
-                            console.log(`Joining Room: ${socket.user.id}`);
+                            // console.log(`Joining Room: ${socket.user.id}`);
                         }
                     } catch(e){
                         Logger.error('Invalid token provided to Socket.IO: SYNC_AUTH_SUBSCRIBE');
